@@ -20,7 +20,9 @@ const Configuration = ({ previewBox, activeLightSource = 1 }) => {
   const [maxRadius, setMaxRadius] = useState(150)
   const [gradient, setGradient] = useState(false)
   const [codeString, setCodeString] = useState('')
+  const [svgString, setSVGString] = useState('')
   const codeContainer = useRef()
+  const SVGContainer = useRef()
   const code = useRef()
   const colorInput = useRef()
   const theme = useRef(false)
@@ -173,6 +175,7 @@ background: ${background};
 box-shadow: ${firstBoxShadow},
             ${secondBoxShadow}`
     )
+    setSVGString(``)
   })
   return (
     <div className="configuration soft-shadow">
@@ -251,6 +254,18 @@ box-shadow: ${firstBoxShadow},
           hidden
         </label>
         <textarea id="code-container" ref={codeContainer} value={codeString} readOnly></textarea>
+      </div>
+      <div className={`code-block ${theme.current ? '' : 'small'}`} ref={code}>
+        <button className="copy" onClick={copyToClipboard}>
+          Copy
+        </button>
+        <SyntaxHighlighter language="css" style={theme.current ? Dark : Light}>
+          {svgString}
+        </SyntaxHighlighter>
+        <label htmlFor="svg-container" className="hidden">
+          hidden
+        </label>
+        <textarea id="svg-container" ref={SVGContainer} value={svgString} readOnly></textarea>
       </div>
       <a
         href="https://uxdesign.cc/neumorphism-in-user-interfaces-b47cef3bf3a6"
